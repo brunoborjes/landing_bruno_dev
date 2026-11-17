@@ -1,56 +1,141 @@
 <!doctype html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Bruno Borjes — Desenvolvedor Full Stack & Especialista em Soluções
-      Digitais
-    </title>
+    <title>Bruno Borjes — Desenvolvedor Full Stack</title>
     <meta
       name="description"
-      content="Desenvolvedor Full Stack especializado em criar aplicações web modernas, landing pages de alta conversão e automações inteligentes." />
+      content="Portfólio de Bruno Borjes, Desenvolvedor Full Stack formado em Análise e Desenvolvimento de Sistemas. Desenvolvimento de aplicações web, interfaces modernas, APIs e automações." />
+    <meta name="theme-color" content="#07080a" />
 
-    <!-- Google Fonts -->
+    <!-- Prevent Theme/Language Flash Before First Paint -->
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("bb_theme") || "dark";
+        const savedLang = localStorage.getItem("bb_lang") || "pt";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.documentElement.setAttribute(
+          "lang",
+          savedLang === "en" ? "en" : "pt-BR"
+        );
+      })();
+    </script>
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Bruno Borjes — Desenvolvedor Full Stack" />
+    <meta
+      property="og:description"
+      content="Engenharia de software, interfaces de alto nível e soluções digitais completas do Front-end ao Back-end." />
+
+    <!-- Google Fonts: Space Grotesk, Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet" />
 
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome 6 -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Scroll Progress Indicator -->
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- Ambient Architectural Grid -->
+    <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+    <!-- Top Scroll Progress Hairline -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
     <!-- Header / Navigation -->
     <header class="site-header" id="header">
       <div class="container nav-container">
-        <a href="#hero" class="brand-logo">
-          <span class="logo-bracket">&lt;</span>Bruno<span class="logo-slash"
-            >/</span
-          >Borjes<span class="logo-bracket">&gt;</span>
+        <a
+          href="#hero"
+          class="brand-logo"
+          aria-label="Bruno Borjes - Página Inicial">
+          <span class="logo-symbol">&lt;</span>
+          <span class="logo-text">Bruno<strong>Borjes</strong></span>
+          <span class="logo-symbol">/&gt;</span>
         </a>
 
-        <nav class="nav-menu" id="navMenu">
-          <a href="#sobre" class="nav-link">Sobre</a>
-          <a href="#skills" class="nav-link">Tecnologias</a>
-          <a href="#projetos" class="nav-link">Portfólio</a>
-          <a href="#servicos" class="nav-link">Serviços</a>
-          <a href="#minigame" class="nav-link">Minigame</a>
-          <a href="#contato" class="nav-link nav-cta-mobile">Contato</a>
+        <nav
+          class="nav-menu"
+          id="navMenu"
+          aria-label="Navegação principal">
+          <a href="#sobre" class="nav-link" data-i18n="nav.about">Sobre</a>
+          <a href="#stack" class="nav-link" data-i18n="nav.stack">Stack</a>
+          <a href="#servicos" class="nav-link" data-i18n="nav.services"
+            >Serviços</a
+          >
+          <a href="#minigame" class="nav-link" data-i18n="nav.playground"
+            >Playground</a
+          >
+          <a
+            href="#contato"
+            class="nav-link nav-mobile-only"
+            data-i18n="nav.contact"
+            >Contato</a
+          >
         </nav>
 
         <div class="header-actions">
-          <a href="#contato" class="btn btn-sm btn-primary">Vamos Conversar</a>
-          <button class="hamburger" id="hamburger" aria-label="Menu">
+          <!-- Language Switcher (PT / EN) -->
+          <div
+            class="lang-switch"
+            role="group"
+            aria-label="Selecionar idioma / Select language">
+            <button
+              type="button"
+              class="lang-option active"
+              data-lang="pt"
+              aria-pressed="true">
+              PT
+            </button>
+            <button
+              type="button"
+              class="lang-option"
+              data-lang="en"
+              aria-pressed="false">
+              EN
+            </button>
+          </div>
+
+          <!-- Theme Switcher (Dark / Light) -->
+          <button
+            type="button"
+            class="icon-btn"
+            id="themeToggle"
+            aria-label="Alternar tema claro ou escuro"
+            title="Alternar tema">
+            <i class="fa-solid fa-sun" id="themeIcon"></i>
+          </button>
+
+          <a
+            href="https://github.com/brunoborjes"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="icon-btn header-github-btn"
+            aria-label="GitHub de Bruno Borjes">
+            <i class="fa-brands fa-github"></i>
+          </a>
+
+          <a href="#contato" class="btn btn-sm btn-primary header-cta-btn">
+            <span data-i18n="nav.cta">Iniciar Conversa</span>
+          </a>
+
+          <button
+            class="hamburger"
+            id="hamburger"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="navMenu">
             <span></span>
             <span></span>
             <span></span>
@@ -60,333 +145,262 @@
     </header>
 
     <main>
-      <!-- Hero Section -->
+      <!-- ================================================================
+           HERO SECTION — FIRST IMPRESSION
+           ================================================================ -->
       <section class="hero" id="hero">
         <div class="container hero-grid">
-          <div class="hero-content">
-            <div class="badge-status">
-              <span class="status-dot"></span> Disponível para novos projetos
+          <div class="hero-content" data-reveal>
+            <div class="hero-status">
+              <span class="status-pulse"></span>
+              <span data-i18n="hero.status"
+                >Disponível para projetos &amp; oportunidades</span
+              >
             </div>
-            <h1>
-              Transformo ideias em
-              <span class="text-gradient">soluções digitais</span>
+
+            <p class="hero-eyebrow" data-i18n="hero.eyebrow">
+              BRUNO BORJES — DESENVOLVEDOR FULL STACK
+            </p>
+
+            <h1 class="hero-title" data-i18n-html="hero.title">
+              Arquitetura sólida e interfaces que transformam ideias em
+              <span class="text-accent-highlight">produtos digitais.</span>
             </h1>
-            <p class="hero-subtitle">
-              Desenvolvedor Full Stack especializado em criar aplicações web de
-              alta performance, interfaces refinadas e arquiteturas robustas que
-              impulsionam negócios.
+
+            <p class="hero-description" data-i18n="hero.description">
+              Desenvolvo aplicações web completas, landing pages de alta
+              conversão e automações inteligentes — unindo precisão técnica no
+              back-end e experiência refinada no front-end.
             </p>
-            <div class="hero-buttons">
-              <a href="#projetos" class="btn btn-primary">
-                <span>Conheça meus projetos</span>
-                <i class="fa-solid fa-arrow-right"></i>
+
+            <div class="hero-cta-group">
+              <a href="#contato" class="btn btn-primary">
+                <span data-i18n="hero.ctaPrimary">Entrar em Contato</span>
+                <i class="fa-solid fa-arrow-down-right"></i>
               </a>
-              <a href="#contato" class="btn btn-outline">
-                <span>Vamos conversar</span>
+              <a href="#servicos" class="btn btn-secondary">
+                <span data-i18n="hero.ctaSecondary">Conhecer Serviços</span>
               </a>
             </div>
-            <div class="hero-metrics">
-              <div class="metric-item">
-                <span class="metric-number">+4</span>
-                <span class="metric-label">Anos de experiência</span>
-              </div>
-              <div class="metric-divider"></div>
-              <div class="metric-item">
-                <span class="metric-number">100%</span>
-                <span class="metric-label">Foco em performance</span>
-              </div>
-              <div class="metric-divider"></div>
-              <div class="metric-item">
-                <span class="metric-number">Clean</span>
-                <span class="metric-label">Código modular</span>
-              </div>
+
+            <div class="hero-social-bar">
+              <span class="social-bar-label" data-i18n="hero.connections"
+                >Conexões:</span
+              >
+              <a
+                href="https://github.com/brunoborjes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-pill">
+                <i class="fa-brands fa-github"></i>
+                <span>GitHub</span>
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-pill">
+                <i class="fa-brands fa-linkedin-in"></i>
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://wa.me/5532999273236?text=Olá%20Bruno,%20vi%20seu%20portfólio%20e%20gostaria%20de%20conversar."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-pill js-whatsapp-link">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+              </a>
             </div>
           </div>
 
-          <div class="hero-terminal-wrapper">
-            <div class="code-terminal">
-              <div class="terminal-header">
-                <div class="terminal-dots">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
+          <!-- Interactive Engineering Workbench Artifact -->
+          <div class="hero-visual" data-reveal data-delay="120">
+            <div class="workbench-card spotlight-card" id="heroWorkbench">
+              <div class="workbench-header">
+                <div class="window-controls" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
-                <div class="terminal-title">bruno-borjes — dev.env</div>
+                <div class="workbench-tabs" role="tablist">
+                  <button
+                    class="wb-tab active"
+                    role="tab"
+                    aria-selected="true"
+                    data-tab="profile">
+                    profile.ts
+                  </button>
+                  <button
+                    class="wb-tab"
+                    role="tab"
+                    aria-selected="false"
+                    data-tab="frontend">
+                    interface.tsx
+                  </button>
+                  <button
+                    class="wb-tab"
+                    role="tab"
+                    aria-selected="false"
+                    data-tab="backend">
+                    server.node.js
+                  </button>
+                </div>
               </div>
-              <div class="terminal-body">
-                <p>
-                  <span class="t-prompt">$</span>
-                  <span class="t-cmd">whoami</span>
-                </p>
-                <p class="t-output">"Bruno Borjes - Full Stack Developer"</p>
-                <p>
-                  <span class="t-prompt">$</span>
-                  <span class="t-cmd">stack.list()</span>
-                </p>
-                <p class="t-output">
-                  [ "HTML5", "CSS3", "JavaScript", "React", "Node.js", "Git" ]
-                </p>
-                <p>
-                  <span class="t-prompt">$</span>
-                  <span class="t-cmd">status.check()</span>
-                </p>
-                <p class="t-output text-accent">
-                  ✔ Ready to build production-grade software.
-                </p>
-                <p class="t-cursor-line">
-                  <span class="t-prompt">$</span> <span class="t-cursor"></span>
-                </p>
+
+              <div class="workbench-body">
+                <!-- Tab 1: Profile -->
+                <pre
+                  class="code-panel active"
+                  data-panel="profile"><code><span class="c-keyword">const</span> <span class="c-var">developer</span> = {
+  <span class="c-prop">name</span>: <span class="c-str">"Bruno Borjes"</span>,
+  <span class="c-prop">role</span>: <span class="c-str">"Full Stack Developer"</span>,
+  <span class="c-prop">education</span>: <span class="c-str" data-i18n="code.education">"Análise e Desenvolvimento de Sistemas"</span>,
+  <span class="c-prop">coreStack</span>: [
+    <span class="c-str">"HTML5"</span>, <span class="c-str">"CSS3"</span>, <span class="c-str">"JavaScript"</span>,
+    <span class="c-str">"React"</span>, <span class="c-str">"Node.js"</span>, <span class="c-str">"Git"</span>, <span class="c-str">"GitHub"</span>
+  ],
+  <span class="c-prop">focus</span>: <span class="c-str">"Clean Architecture &amp; User Experience"</span>
+};
+
+<span class="c-keyword">export default</span> <span class="c-var">developer</span>;</code></pre>
+
+                <!-- Tab 2: Front-end -->
+                <pre
+                  class="code-panel"
+                  data-panel="frontend"><code><span class="c-keyword">export function</span> <span class="c-fn">ProductInterface</span>({ <span class="c-var">data</span> }) {
+  <span class="c-comment" data-i18n="code.feComment">// Componentização modular e acessibilidade</span>
+  <span class="c-keyword">return</span> (
+    &lt;<span class="c-tag">AppShell</span> <span class="c-prop">responsive</span> <span class="c-prop">a11y</span>&gt;
+      &lt;<span class="c-tag">AnalyticsViewport</span> <span class="c-prop">metrics</span>={<span class="c-var">data</span>} /&gt;
+      &lt;<span class="c-tag">ActionBar</span> <span class="c-prop">optimized</span>={<span class="c-bool">true</span>} /&gt;
+    &lt;/<span class="c-tag">AppShell</span>&gt;
+  );
+}</code></pre>
+
+                <!-- Tab 3: Back-end -->
+                <pre
+                  class="code-panel"
+                  data-panel="backend"><code><span class="c-keyword">import</span> { <span class="c-var">createServer</span> } <span class="c-keyword">from</span> <span class="c-str">"node:http"</span>;
+
+<span class="c-comment" data-i18n="code.beComment">// APIs RESTful e automação de fluxos</span>
+<span class="c-keyword">async function</span> <span class="c-fn">handleWorkflow</span>(<span class="c-var">payload</span>) {
+  <span class="c-keyword">const</span> <span class="c-var">validated</span> = <span class="c-fn">sanitizeInput</span>(<span class="c-var">payload</span>);
+  <span class="c-keyword">return await</span> <span class="c-fn">dispatchAutomation</span>(<span class="c-var">validated</span>);
+}</code></pre>
+              </div>
+
+              <div class="workbench-footer">
+                <span class="wb-meta"
+                  ><i class="fa-solid fa-code-branch"></i> main</span
+                >
+                <span class="wb-meta"
+                  ><i class="fa-solid fa-circle-check"></i> UTF-8 &bull; ES6+</span
+                >
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- About Section -->
-      <section class="about section-spacing" id="sobre">
+      <!-- ================================================================
+           ABOUT SECTION — BENTO EDITORIAL ARCHITECTURE
+           ================================================================ -->
+      <section class="about section-block" id="sobre">
         <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Trajetória Profissional</span>
-            <h2>
-              Engenharia de software com foco em
-              <span class="text-gradient">experiência e valor</span>
+          <div class="section-heading" data-reveal>
+            <span class="section-index" data-i18n="about.index"
+              >01 // SOBRE MIM</span
+            >
+            <h2 data-i18n="about.heading">
+              Visão de produto aliada à engenharia de software de ponta a ponta.
             </h2>
           </div>
 
-          <div class="about-grid">
-            <div class="about-text-card">
-              <p class="lead-text">
-                Sou Bruno Borjes, desenvolvedor Full Stack apaixonado por
-                tecnologia e arquitetura de software limpa. Meu objetivo é
-                transformar necessidades reais em aplicações funcionais,
-                modernas e intuitivas, unindo desempenho, design sofisticado e
-                usabilidade exemplar.
+          <div class="about-bento">
+            <!-- Primary Story Card -->
+            <article class="bento-card bento-main spotlight-card" data-reveal>
+              <div class="bento-badge" data-i18n="about.badge">
+                Trajetória &amp; Formação
+              </div>
+              <h3 data-i18n="about.mainTitle">
+                Construindo software funcional, escalável e orientado à
+                experiência real.
+              </h3>
+              <p data-i18n-html="about.p1">
+                Sou <strong>Bruno Borjes</strong>, desenvolvedor Full Stack com
+                formação em
+                <strong>Análise e Desenvolvimento de Sistemas</strong>. Minha
+                atuação é focada em transformar demandas de negócios e ideias em
+                aplicações web estruturadas, rápidas e intuitivas.
               </p>
-              <p>
-                Trabalho em todo o ciclo de vida do produto digital, desde a
-                concepção de interfaces responsivas até a construção de lógica
-                backend eficiente e automações estruturadas. Acredito que um bom
-                software deve ser elegante tanto por dentro quanto por fora.
+              <p data-i18n="about.p2">
+                Transitanto com naturalidade entre o design de interface e a
+                lógica de servidor, acompanho todo o ciclo de desenvolvimento: da
+                arquitetura semântica e responsiva no Front-end até a
+                construção de APIs, regras de negócio e automações no Back-end.
               </p>
-              <div class="about-signature">
-                <span class="sig-name">Bruno Borjes</span>
-                <span class="sig-title">Full Stack Developer</span>
-              </div>
-            </div>
-
-            <div class="about-highlights">
-              <div class="highlight-box">
-                <div class="highlight-icon">
-                  <i class="fa-solid fa-code"></i>
-                </div>
-                <h3>Clean Code</h3>
-                <p>
-                  Código modular, reutilizável e de fácil manutenção seguindo
-                  padrões da indústria.
-                </p>
-              </div>
-              <div class="highlight-box">
-                <div class="highlight-icon">
-                  <i class="fa-solid fa-gauge-high"></i>
-                </div>
-                <h3>Performance</h3>
-                <p>
-                  Otimização rigorosa de carregamento, assets e SEO técnico para
-                  máximo rendimento.
-                </p>
-              </div>
-              <div class="highlight-box">
-                <div class="highlight-icon">
-                  <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h3>Resiliência</h3>
-                <p>
-                  Aplicações estruturadas para garantir estabilidade, segurança
-                  e escalabilidade.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tech Stack Section -->
-      <section class="skills section-spacing" id="skills">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Arsenal Tecnológico</span>
-            <h2>
-              Tecnologias e <span class="text-gradient">Ferramentas</span>
-            </h2>
-            <p class="section-desc">
-              Stack moderna selecionada para garantir robustez, velocidade e
-              escalabilidade.
-            </p>
-          </div>
-
-          <div class="skills-grid">
-            <div class="skill-card">
-              <div class="skill-icon-wrap html">
-                <i class="fa-brands fa-html5"></i>
-              </div>
-              <h3>HTML5</h3>
-              <p>Marcação semântica e acessível (a11y).</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon-wrap css">
-                <i class="fa-brands fa-css3-alt"></i>
-              </div>
-              <h3>CSS3</h3>
-              <p>Layouts modernos, Grid, Flexbox e animações.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon-wrap js">
-                <i class="fa-brands fa-js"></i>
-              </div>
-              <h3>JavaScript</h3>
-              <p>ES6+, assincronicidade e manipulação DOM.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon-wrap react">
-                <i class="fa-brands fa-react"></i>
-              </div>
-              <h3>React</h3>
-              <p>Componentização, hooks e estados eficientes.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon-wrap node">
-                <i class="fa-brands fa-node-js"></i>
-              </div>
-              <h3>Node.js</h3>
-              <p>APIs RESTful e automação de processos.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon-wrap git">
-                <i class="fa-brands fa-git-alt"></i>
-              </div>
-              <h3>Git & GitHub</h3>
-              <p>Controle de versão e fluxos colaborativos.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Portfolio Projects Section -->
-      <section class="portfolio section-spacing" id="projetos">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Portfólio de Trabalhos</span>
-            <h2>Projetos em <span class="text-gradient">Destaque</span></h2>
-            <p class="section-desc">
-              Amostras de aplicações desenvolvidas com rigor técnico e
-              acabamento profissional.
-            </p>
-          </div>
-
-          <div class="projects-grid">
-            <!-- Project 1 -->
-            <article class="project-card">
-              <div class="project-media">
-                <div class="project-preview-mockup p1">
-                  <i class="fa-solid fa-chart-line"></i>
-                  <span>Dashboard Analítico</span>
-                </div>
-                <div class="project-badge">Sistema Web</div>
-              </div>
-              <div class="project-content">
-                <h3>Gestor de Métricas & Vendas</h3>
-                <p>
-                  Plataforma interativa para controle de faturamento, exibição
-                  de relatórios dinâmicos e sincronização de dados via
-                  automação.
-                </p>
-                <div class="project-tags">
-                  <span>React</span>
-                  <span>JavaScript</span>
-                  <span>CSS3</span>
-                </div>
-                <div class="project-actions">
-                  <a href="#contato" class="btn btn-sm btn-outline"
-                    ><i class="fa-solid fa-eye"></i> Demo</a
-                  >
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener"
-                    class="btn btn-sm btn-text"
-                    ><i class="fa-brands fa-github"></i> Código</a
+              <div class="bento-footer-sign">
+                <span class="sign-monogram">BB</span>
+                <div>
+                  <strong>Bruno Borjes</strong>
+                  <span data-i18n="about.roleSubtitle"
+                    >Analista e Desenvolvedor de Sistemas</span
                   >
                 </div>
               </div>
             </article>
 
-            <!-- Project 2 -->
-            <article class="project-card">
-              <div class="project-media">
-                <div class="project-preview-mockup p2">
-                  <i class="fa-solid fa-trophy"></i>
-                  <span>Plataforma Esportiva</span>
-                </div>
-                <div class="project-badge">Gestão de Torneios</div>
+            <!-- Front-end Card -->
+            <article
+              class="bento-card spotlight-card"
+              data-reveal
+              data-delay="80">
+              <div class="bento-icon">
+                <i class="fa-solid fa-layer-group"></i>
               </div>
-              <div class="project-content">
-                <h3>BS Sports Hub</h3>
-                <p>
-                  Sistema digital para administração de campeonatos esportivos,
-                  inscrições de equipes, chaveamentos e boletins informativos.
-                </p>
-                <div class="project-tags">
-                  <span>HTML5</span>
-                  <span>CSS3</span>
-                  <span>JavaScript</span>
-                </div>
-                <div class="project-actions">
-                  <a href="#contato" class="btn btn-sm btn-outline"
-                    ><i class="fa-solid fa-eye"></i> Demo</a
-                  >
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener"
-                    class="btn btn-sm btn-text"
-                    ><i class="fa-brands fa-github"></i> Código</a
-                  >
-                </div>
-              </div>
+              <h4 data-i18n="about.feTitle">Engenharia Front-end</h4>
+              <p data-i18n="about.feDesc">
+                Interfaces modernas e acessíveis com HTML5, CSS3, JavaScript e
+                React. Foco em hierarquia visual, microinterações fluidas e
+                responsividade real em qualquer tela.
+              </p>
             </article>
 
-            <!-- Project 3 -->
-            <article class="project-card">
-              <div class="project-media">
-                <div class="project-preview-mockup p3">
-                  <i class="fa-solid fa-file-invoice-dollar"></i>
-                  <span>Landing Page Comercial</span>
-                </div>
-                <div class="project-badge">Alta Conversão</div>
+            <!-- Back-end Card -->
+            <article
+              class="bento-card spotlight-card"
+              data-reveal
+              data-delay="140">
+              <div class="bento-icon">
+                <i class="fa-solid fa-server"></i>
               </div>
-              <div class="project-content">
-                <h3>Landing Page Advocacia</h3>
-                <p>
-                  Página institucional de alta performance com seções
-                  estratégicas, formulário validado e integração direta com
-                  canais de atendimento.
-                </p>
-                <div class="project-tags">
-                  <span>HTML5</span>
-                  <span>CSS Grid</span>
-                  <span>JS Moderno</span>
+              <h4 data-i18n="about.beTitle">Back-end &amp; Automação</h4>
+              <p data-i18n="about.beDesc">
+                Estruturação de serviços em Node.js, integração de dados e
+                automação de processos operacionais para eliminar gargalos e
+                tarefas manuais.
+              </p>
+            </article>
+
+            <!-- Quality Card -->
+            <article
+              class="bento-card bento-wide spotlight-card"
+              data-reveal
+              data-delay="180">
+              <div class="bento-wide-content">
+                <div class="bento-icon">
+                  <i class="fa-solid fa-compass-drafting"></i>
                 </div>
-                <div class="project-actions">
-                  <a href="#contato" class="btn btn-sm btn-outline"
-                    ><i class="fa-solid fa-eye"></i> Demo</a
-                  >
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener"
-                    class="btn btn-sm btn-text"
-                    ><i class="fa-brands fa-github"></i> Código</a
-                  >
+                <div>
+                  <h4 data-i18n="about.qaTitle">
+                    Código Limpo &amp; Manutenibilidade
+                  </h4>
+                  <p data-i18n="about.qaDesc">
+                    Organização modular, controle de versão rigoroso com Git e
+                    GitHub, boas práticas de SEO técnico e atenção aos detalhes
+                    que sustentam o crescimento do produto.
+                  </p>
                 </div>
               </div>
             </article>
@@ -394,107 +408,225 @@
         </div>
       </section>
 
-      <!-- Services Section -->
-      <section class="services section-spacing" id="servicos">
+      <!-- ================================================================
+           TECH STACK SECTION — EXTENSIBLE & CATEGORIZED
+           ================================================================ -->
+      <section class="stack-section section-block" id="stack">
         <div class="container">
-          <div class="section-header">
-            <span class="section-tag">O Que Faço</span>
-            <h2>
-              Soluções sob medida para o
-              <span class="text-gradient">seu negócio</span>
+          <div class="section-heading-row" data-reveal>
+            <div class="section-heading">
+              <span class="section-index" data-i18n="stack.index"
+                >02 // STACK TECNOLÓGICA</span
+              >
+              <h2 data-i18n="stack.heading">
+                Tecnologias e ferramentas do meu fluxo de trabalho.
+              </h2>
+            </div>
+
+            <div
+              class="stack-filters"
+              role="tablist"
+              aria-label="Filtrar tecnologias por categoria">
+              <button
+                class="filter-btn active"
+                data-filter="all"
+                data-i18n="stack.filterAll">
+                Todas
+              </button>
+              <button
+                class="filter-btn"
+                data-filter="frontend"
+                data-i18n="stack.filterFrontend">
+                Front-end
+              </button>
+              <button
+                class="filter-btn"
+                data-filter="backend"
+                data-i18n="stack.filterBackend">
+                Back-end
+              </button>
+              <button
+                class="filter-btn"
+                data-filter="tools"
+                data-i18n="stack.filterTools">
+                Versionamento
+              </button>
+            </div>
+          </div>
+
+          <!-- Populated & Extensible via script.js -->
+          <div class="stack-grid" id="stackGrid"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           SERVICES SECTION — SOLUTIONS ARCHITECTURE
+           ================================================================ -->
+      <section class="services-section section-block" id="servicos">
+        <div class="container">
+          <div class="section-heading" data-reveal>
+            <span class="section-index" data-i18n="services.index"
+              >03 // SERVIÇOS &amp; ESCOPO</span
+            >
+            <h2 data-i18n="services.heading">
+              Como posso contribuir com o seu projeto ou empresa.
             </h2>
           </div>
 
           <div class="services-grid">
-            <div class="service-card">
-              <div class="service-num">01</div>
-              <h3>Landing Pages</h3>
-              <p>
-                Páginas de captura e vendas ultravelozes, estruturadas
-                estrategicamente para converter visitantes em clientes.
+            <article class="service-card spotlight-card" data-reveal>
+              <div class="service-top">
+                <span class="service-idx">01</span>
+                <i class="fa-solid fa-rocket"></i>
+              </div>
+              <h3 data-i18n="services.s1Title">Landing Pages</h3>
+              <p data-i18n="services.s1Desc">
+                Páginas rápidas, responsivas e estruturadas com foco em
+                clareza de proposta de valor e conversão de visitantes.
               </p>
-            </div>
-            <div class="service-card">
-              <div class="service-num">02</div>
-              <h3>Sites Profissionais</h3>
-              <p>
-                Institucionais robustos, responsivos e otimizados para
-                mecanismos de busca (SEO) que fortalecem sua marca.
+            </article>
+
+            <article
+              class="service-card spotlight-card"
+              data-reveal
+              data-delay="60">
+              <div class="service-top">
+                <span class="service-idx">02</span>
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <h3 data-i18n="services.s2Title">Sites Profissionais</h3>
+              <p data-i18n="services.s2Desc">
+                Presença digital institucional com identidade visual
+                consistente, código limpo e otimização para mecanismos de busca.
               </p>
-            </div>
-            <div class="service-card">
-              <div class="service-num">03</div>
-              <h3>Sistemas Personalizados</h3>
-              <p>
-                Desenvolvimento de plataformas web exclusivas voltadas para
-                automatizar fluxos operacionais e resolver dores reais.
+            </article>
+
+            <article
+              class="service-card spotlight-card"
+              data-reveal
+              data-delay="120">
+              <div class="service-top">
+                <span class="service-idx">03</span>
+                <i class="fa-solid fa-cubes"></i>
+              </div>
+              <h3 data-i18n="services.s3Title">Sistemas Personalizados</h3>
+              <p data-i18n="services.s3Desc">
+                Plataformas web sob medida para centralizar operações,
+                organizar informações e apoiar a gestão do negócio.
               </p>
-            </div>
-            <div class="service-card">
-              <div class="service-num">04</div>
-              <h3>Aplicações Web (SPA)</h3>
-              <p>
-                Interfaces dinâmicas e fluidas construídas em React com
-                excelente arquitetura de componentes.
+            </article>
+
+            <article class="service-card spotlight-card" data-reveal>
+              <div class="service-top">
+                <span class="service-idx">04</span>
+                <i class="fa-brands fa-react"></i>
+              </div>
+              <h3 data-i18n="services.s4Title">Aplicações Web (SPA)</h3>
+              <p data-i18n="services.s4Desc">
+                Interfaces interativas construídas em React com navegação
+                fluida, componentização reutilizável e excelente usabilidade.
               </p>
-            </div>
-            <div class="service-card">
-              <div class="service-num">05</div>
-              <h3>Automação de Processos</h3>
-              <p>
-                Integração de planilhas, Google Apps Script e scripts em Node.js
-                para eliminar tarefas repetitivas.
+            </article>
+
+            <article
+              class="service-card spotlight-card"
+              data-reveal
+              data-delay="60">
+              <div class="service-top">
+                <span class="service-idx">05</span>
+                <i class="fa-solid fa-gears"></i>
+              </div>
+              <h3 data-i18n="services.s5Title">Automação de Processos</h3>
+              <p data-i18n="services.s5Desc">
+                Integração de fluxos de trabalho com Node.js e scripts
+                automatizados para reduzir tarefas manuais repetitivas.
               </p>
-            </div>
-            <div class="service-card">
-              <div class="service-num">06</div>
-              <h3>Manutenção & Melhorias</h3>
-              <p>
-                Refatoração de código legado, correções de bugs, auditoria de
-                performance e atualizações visuais.
+            </article>
+
+            <article
+              class="service-card spotlight-card"
+              data-reveal
+              data-delay="120">
+              <div class="service-top">
+                <span class="service-idx">06</span>
+                <i class="fa-solid fa-wrench"></i>
+              </div>
+              <h3 data-i18n="services.s6Title">Refatoração &amp; Evolução</h3>
+              <p data-i18n="services.s6Desc">
+                Melhoria de performance, modernização de interfaces, correção de
+                bugs e reestruturação de código existente.
               </p>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- Minigame Section -->
-      <section class="minigame-section section-spacing" id="minigame">
+      <!-- ================================================================
+           INTERACTIVE MINIGAME — DESAFIO DO DESENVOLVEDOR
+           ================================================================ -->
+      <section class="minigame-section section-block" id="minigame">
         <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Interação & Lazer</span>
-            <h2>Desafio do <span class="text-gradient">Desenvolvedor</span></h2>
-            <p class="section-desc">
-              Colete símbolos de código válidos e desvie dos bugs indesejados!
+          <div class="section-heading" data-reveal>
+            <span class="section-index" data-i18n="game.index"
+              >04 // PLAYGROUND INTERATIVO</span
+            >
+            <h2 data-i18n="game.heading">Desafio do Desenvolvedor</h2>
+            <p class="section-lead" data-i18n-html="game.lead">
+              Uma pausa interativa: capture blocos de código válido
+              (<code>&lt;/&gt;</code>, <code>{}</code>) e evite os
+              <code>BUG</code>s antes que a integridade do build chegue a zero.
             </p>
           </div>
 
-          <div class="game-container">
-            <div class="game-stats-bar">
-              <div class="stat-group">
-                <span>Score: <strong id="gameScore">0</strong></span>
+          <div class="game-shell" data-reveal>
+            <div class="game-hud">
+              <div class="hud-item">
+                <span class="hud-label" data-i18n="game.scoreLabel">SCORE</span>
+                <strong id="gameScore">0</strong>
               </div>
-              <div class="stat-group">
-                <span>Recorde: <strong id="gameHighScore">0</strong></span>
+              <div class="hud-item">
+                <span class="hud-label" data-i18n="game.integrityLabel"
+                  >INTEGRIDADE</span
+                >
+                <strong id="gameLives" class="hud-lives">3 / 3</strong>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label" data-i18n="game.highScoreLabel"
+                  >RECORDE</span
+                >
+                <strong id="gameHighScore">0</strong>
               </div>
             </div>
 
-            <div class="game-canvas-wrapper">
-              <canvas id="gameCanvas" width="700" height="350"></canvas>
+            <div class="game-viewport">
+              <canvas id="gameCanvas" width="760" height="360"></canvas>
               <div class="game-overlay" id="gameOverlay">
-                <h3>Pronto para o desafio?</h3>
-                <p>Use as setas do teclado ou os botões abaixo para mover.</p>
-                <button class="btn btn-primary" id="startGameBtn">
-                  Iniciar Jogo
+                <span class="overlay-badge">HTML5 CANVAS ENGINE</span>
+                <h3 id="overlayTitle">Pronto para compilar?</h3>
+                <p id="overlayText">
+                  Mova com as setas <strong>&larr; &rarr;</strong>, teclas
+                  <strong>A / D</strong> ou toque nos controles abaixo.
+                </p>
+                <button type="button" class="btn btn-primary" id="startGameBtn">
+                  <i class="fa-solid fa-play"></i>
+                  <span data-i18n="game.startBtn">Iniciar Execução</span>
                 </button>
               </div>
             </div>
 
-            <div class="game-mobile-controls">
-              <button class="game-ctrl-btn" id="btnLeft">
+            <div class="game-touch-bar">
+              <button
+                type="button"
+                class="touch-ctrl"
+                id="btnLeft"
+                aria-label="Mover para esquerda">
                 <i class="fa-solid fa-arrow-left"></i>
               </button>
-              <button class="game-ctrl-btn" id="btnRight">
+              <button
+                type="button"
+                class="touch-ctrl"
+                id="btnRight"
+                aria-label="Mover para direita">
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
@@ -502,115 +634,184 @@
         </div>
       </section>
 
-      <!-- Contact Section -->
-      <section class="contact section-spacing" id="contato">
+      <!-- ================================================================
+           CONTACT & CONVERSION SECTION
+           ================================================================ -->
+      <section class="contact-section section-block" id="contato">
         <div class="container">
-          <div class="contact-grid">
-            <div class="contact-info">
-              <span class="section-tag">Vamos Trabalhar Juntos</span>
-              <h2>
-                Tem uma ideia?
-                <span class="text-gradient">Vamos tirar ela do papel.</span>
+          <div class="contact-layout">
+            <div class="contact-pitch" data-reveal>
+              <span class="section-index" data-i18n="contact.index"
+                >05 // CONTATO</span
+              >
+              <h2 data-i18n="contact.heading">
+                Vamos construir algo relevante juntos.
               </h2>
-              <p>
-                Se você precisa de um site profissional, sistema web ou
-                automação para o seu negócio, entre em contato. Vamos conversar
-                sobre os objetivos do seu projeto.
+              <p class="contact-lead" data-i18n="contact.lead">
+                Disponível para oportunidades como Desenvolvedor Full Stack,
+                freelas especializados e desenvolvimento de projetos sob medida
+                para empresas.
               </p>
 
-              <div class="contact-details">
+              <div class="contact-channels">
                 <a
-                  href="https://wa.me/5532999273236?text=Olá%20Bruno,%20vim%20através%20do%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
+                  href="https://wa.me/5532999273236?text=Olá%20Bruno,%20vim%20pelo%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
                   target="_blank"
-                  rel="noopener"
-                  class="contact-direct-card">
-                  <div class="cd-icon whatsapp">
+                  rel="noopener noreferrer"
+                  class="channel-card spotlight-card js-whatsapp-link">
+                  <div class="channel-icon whatsapp">
                     <i class="fa-brands fa-whatsapp"></i>
                   </div>
-                  <div>
-                    <span class="cd-label">WhatsApp Direto</span>
+                  <div class="channel-info">
+                    <span class="channel-label" data-i18n="contact.waLabel"
+                      >WhatsApp Direto</span
+                    >
                     <strong>(32) 99927-3236</strong>
                   </div>
+                  <i
+                    class="fa-solid fa-arrow-up-right-from-square channel-arrow"></i>
                 </a>
 
-                <div class="contact-direct-card">
-                  <div class="cd-icon email">
+                <div class="channel-card spotlight-card">
+                  <div class="channel-icon email">
                     <i class="fa-solid fa-envelope"></i>
                   </div>
-                  <div>
-                    <span class="cd-label">E-mail Profissional</span>
-                    <strong>brunoborjes.dev@gmail.com</strong>
+                  <div class="channel-info">
+                    <span class="channel-label" data-i18n="contact.emailLabel"
+                      >E-mail Profissional</span
+                    >
+                    <strong id="emailText">brunoborjes.dev@gmail.com</strong>
                   </div>
+                  <button
+                    type="button"
+                    class="copy-email-btn"
+                    id="copyEmailBtn"
+                    aria-label="Copiar endereço de e-mail"
+                    title="Copiar e-mail">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
                 </div>
               </div>
 
-              <div class="social-links">
+              <div class="contact-socials">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/brunoborjes"
                   target="_blank"
-                  rel="noopener"
-                  aria-label="GitHub"
-                  ><i class="fa-brands fa-github"></i
-                ></a>
+                  rel="noopener noreferrer"
+                  class="social-link-box"
+                  aria-label="GitHub">
+                  <i class="fa-brands fa-github"></i>
+                  <span>github.com/brunoborjes</span>
+                </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.linkedin.com"
                   target="_blank"
-                  rel="noopener"
-                  aria-label="Instagram"
-                  ><i class="fa-brands fa-instagram"></i
-                ></a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="LinkedIn"
-                  ><i class="fa-brands fa-linkedin-in"></i
-                ></a>
+                  rel="noopener noreferrer"
+                  class="social-link-box"
+                  aria-label="LinkedIn">
+                  <i class="fa-brands fa-linkedin-in"></i>
+                  <span>LinkedIn</span>
+                </a>
               </div>
             </div>
 
-            <div class="contact-form-wrapper">
+            <!-- Functional Direct Email Form -->
+            <div
+              class="contact-form-card spotlight-card"
+              data-reveal
+              data-delay="120">
               <form id="contactForm" class="contact-form">
-                <h3>Envie sua mensagem</h3>
-                <div class="form-group">
-                  <label for="name">Seu Nome</label>
+                <div class="form-header">
+                  <h3 data-i18n="form.title">Envie uma mensagem</h3>
+                  <p data-i18n="form.subtitle">
+                    As respostas são encaminhadas diretamente ao meu e-mail.
+                  </p>
+                </div>
+
+                <div class="form-field">
+                  <label for="name" data-i18n="form.nameLabel">Seu Nome</label>
                   <input
                     type="text"
                     id="name"
+                    name="nome"
                     required
-                    placeholder="Ex: Carlos Silva" />
+                    placeholder="Ex: Carlos Silva"
+                    data-i18n-placeholder="form.namePlaceholder" />
                 </div>
-                <div class="form-group">
-                  <label for="email">Seu E-mail</label>
+
+                <div class="form-field">
+                  <label for="email" data-i18n="form.emailLabel"
+                    >Seu E-mail</label
+                  >
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
-                    placeholder="carlos@empresa.com" />
+                    placeholder="carlos@empresa.com"
+                    data-i18n-placeholder="form.emailPlaceholder" />
                 </div>
-                <div class="form-group">
-                  <label for="projectType">Tipo de Projeto</label>
-                  <select id="projectType">
-                    <option value="landing">Landing Page</option>
-                    <option value="site">Site Profissional</option>
-                    <option value="sistema">Sistema Web / Aplicação</option>
-                    <option value="automacao">Automação de Processos</option>
-                    <option value="outro">Outro</option>
+
+                <div class="form-field">
+                  <label for="projectType" data-i18n="form.subjectLabel"
+                    >Assunto / Tipo de Projeto</label
+                  >
+                  <select id="projectType" name="tipo_projeto">
+                    <option value="Landing Page" data-i18n="form.optLanding">
+                      Landing Page
+                    </option>
+                    <option
+                      value="Site Profissional"
+                      data-i18n="form.optWebsite">
+                      Site Profissional
+                    </option>
+                    <option
+                      value="Sistema Web / Aplicação"
+                      data-i18n="form.optSystem">
+                      Sistema Web / Aplicação
+                    </option>
+                    <option
+                      value="Automação de Processos"
+                      data-i18n="form.optAutomation">
+                      Automação de Processos
+                    </option>
+                    <option
+                      value="Oportunidade / Recrutamento"
+                      data-i18n="form.optHiring">
+                      Oportunidade / Recrutamento
+                    </option>
+                    <option value="Outro" data-i18n="form.optOther">
+                      Outro
+                    </option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="message">Mensagem</label>
+
+                <div class="form-field">
+                  <label for="message" data-i18n="form.messageLabel"
+                    >Mensagem</label
+                  >
                   <textarea
                     id="message"
+                    name="mensagem"
                     rows="4"
                     required
-                    placeholder="Descreva brevemente o seu projeto ou necessidade..."></textarea>
+                    placeholder="Descreva brevemente o contexto, objetivo ou oportunidade..."
+                    data-i18n-placeholder="form.messagePlaceholder"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary btn-full">
-                  <span>Enviar Mensagem</span>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-full"
+                  id="submitBtn">
+                  <span data-i18n="form.submitBtn">Enviar Mensagem</span>
                   <i class="fa-solid fa-paper-plane"></i>
                 </button>
-                <p class="form-feedback" id="formFeedback"></p>
+
+                <p
+                  class="form-feedback"
+                  id="formFeedback"
+                  role="status"
+                  aria-live="polite"></p>
               </form>
             </div>
           </div>
@@ -620,24 +821,49 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-      <div class="container footer-content">
-        <p>
-          &copy; <span id="currentYear">2026</span> Bruno Borjes. Todos os
-          direitos reservados.
-        </p>
-        <p class="footer-sub">
-          Desenvolvido com código limpo e arquitetura modular.
-        </p>
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <span class="logo-symbol">&lt;</span>Bruno<strong>Borjes</strong
+          ><span class="logo-symbol">/&gt;</span>
+          <p data-i18n-html="footer.copy">
+            &copy; <span id="currentYear">2026</span> Bruno Borjes. Desenvolvido
+            com arquitetura limpa e sem dependências desnecessárias.
+          </p>
+        </div>
+
+        <div class="footer-actions">
+          <a
+            href="https://github.com/brunoborjes"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            ><i class="fa-brands fa-linkedin-in"></i
+          ></a>
+          <button
+            type="button"
+            class="back-to-top"
+            id="backToTop"
+            aria-label="Voltar ao topo">
+            <i class="fa-solid fa-arrow-up"></i>
+          </button>
+        </div>
       </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
+    <!-- Floating WhatsApp Quick Action -->
     <a
       href="https://wa.me/5532999273236?text=Olá%20Bruno,%20vim%20através%20do%20seu%20portfólio."
       target="_blank"
-      rel="noopener"
-      class="floating-whatsapp"
-      aria-label="Contato via WhatsApp">
+      rel="noopener noreferrer"
+      class="floating-whatsapp js-whatsapp-link"
+      aria-label="Conversar no WhatsApp">
       <i class="fa-brands fa-whatsapp"></i>
     </a>
 
