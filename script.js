@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BRUNO BORJES — PORTFOLIO ARCHITECTURE, I18N, THEME ENGINE & CANVAS GAME
+   BRUNO BORJES — RESPONSIVE PORTFOLIO, I18N, THEME ENGINE & CANVAS GAME
    ========================================================================== */
 
 let currentLang = localStorage.getItem("bb_lang") || "pt";
@@ -95,7 +95,7 @@ const TRANSLATIONS = {
     "game.highScoreLabel": "RECORDE",
     "game.idleTitle": "Pronto para compilar?",
     "game.idleText":
-      "Mova com as setas <strong>&larr; &rarr;</strong>, teclas <strong>A / D</strong> ou toque nos controles abaixo.",
+      "Mova com as setas <strong>&larr; &rarr;</strong>, teclas <strong>A / D</strong>, deslize na tela ou use os botões abaixo.",
     "game.startBtn": "Iniciar Execução",
     "game.overTitle": "Build interrompido!",
     "game.restartBtn": "Executar Novamente",
@@ -219,7 +219,7 @@ const TRANSLATIONS = {
     "game.highScoreLabel": "HIGH SCORE",
     "game.idleTitle": "Ready to compile?",
     "game.idleText":
-      "Move with arrow keys <strong>&larr; &rarr;</strong>, <strong>A / D</strong> keys, or tap the touch controls below.",
+      "Move with arrow keys <strong>&larr; &rarr;</strong>, <strong>A / D</strong> keys, swipe on screen, or tap the controls below.",
     "game.startBtn": "Start Run",
     "game.overTitle": "Build interrupted!",
     "game.restartBtn": "Run Again",
@@ -414,7 +414,6 @@ function initThemeSwitcher() {
       );
     }
 
-    // Notify canvas game to redraw with updated theme colors
     window.dispatchEvent(new CustomEvent("bb:themechange", { detail: theme }));
   };
 
@@ -459,14 +458,12 @@ function applyLanguage(lang) {
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute("content", dict.metaDescription);
 
-  // Update active state on PT | EN buttons
   document.querySelectorAll(".lang-option").forEach((btn) => {
     const isActive = btn.getAttribute("data-lang") === lang;
     btn.classList.toggle("active", isActive);
     btn.setAttribute("aria-pressed", String(isActive));
   });
 
-  // Plain text elements
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     if (dict[key] !== undefined) {
@@ -474,7 +471,6 @@ function applyLanguage(lang) {
     }
   });
 
-  // Rich HTML elements
   document.querySelectorAll("[data-i18n-html]").forEach((el) => {
     const key = el.getAttribute("data-i18n-html");
     if (dict[key] !== undefined) {
@@ -482,7 +478,6 @@ function applyLanguage(lang) {
     }
   });
 
-  // Input & textarea placeholders
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
     const key = el.getAttribute("data-i18n-placeholder");
     if (dict[key] !== undefined) {
@@ -490,22 +485,17 @@ function applyLanguage(lang) {
     }
   });
 
-  // Update WhatsApp pre-filled message links
   const encodedMsg = encodeURIComponent(dict["contact.waText"]);
   document.querySelectorAll(".js-whatsapp-link").forEach((link) => {
     link.setAttribute("href", `https://wa.me/5532999273236?text=${encodedMsg}`);
   });
 
-  // Refresh dynamic year in footer
   const currentYear = document.getElementById("currentYear");
   if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
   }
 
-  // Re-render Tech Stack in active language
   renderTechStack();
-
-  // Refresh Minigame Overlay if visible
   syncGameOverlayLanguage();
 }
 
@@ -553,6 +543,12 @@ function initNavigation() {
 
   navLinks.forEach((link) => {
     link.addEventListener("click", () => toggleMenu(true));
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 860 && navMenu.classList.contains("active")) {
+      toggleMenu(true);
+    }
   });
 
   document.addEventListener("keydown", (e) => {
@@ -621,7 +617,7 @@ function initScrollEffects() {
         observer.unobserve(entry.target);
       });
     },
-    { threshold: 0.12 }
+    { threshold: 0.1 }
   );
 
   revealEls.forEach((el) => observer.observe(el));
@@ -794,11 +790,12 @@ function initContactSystem() {
 }
 
 /* --------------------------------------------------------------------------
-   9. MINIGAME: "DESAFIO DO DESENVOLVEDOR" (THEME-AWARE CANVAS ENGINE)
+   9. MINIGAME: "DESAFIO DO DESENVOLVEDOR" (RESPONSIVE CANVAS + TOUCH DRAG)
    -------------------------------------------------------------------------- */
 function initDevMinigame() {
   const canvas = document.getElementById("gameCanvas");
-  if (!canvas) return;
+  const viewport = document.getElementById("gameViewport");
+  if (!canvas || !viewport) return;
 
   const ctx = canvas.getContext("2d");
   const startGameBtn = document.getElementById("startGameBtn");
@@ -809,16 +806,41 @@ function initDevMinigame() {
   const btnLeft = document.getElementById("btnLeft");
   const btnRight = document.getElementById("btnRight");
 
-  const LOGICAL_WIDTH = 760;
-  const LOGICAL_HEIGHT = 360;
+  let logicalWidth = viewport.clientWidth || 760;
+  let logicalHeight = viewport.clientHeight || 360;
 
-  const setupCanvasResolution = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = LOGICAL_WIDTH * dpr;
-    canvas.height = LOGICAL_HEIGHT * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const player = {
+    x: logicalWidth / 2 - 28,
+    y: logicalHeight - 38,
+    width: 56,
+    height: 24,
+    speed: 6.5,
+    dx: 0
   };
-  setupCanvasResolution();
+
+  // Match logical dimensions & DPR dynamically to real viewport size (1:1 aspect ratio)
+  const syncCanvasDimensions = () => {
+    const rect = viewport.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    const prevWidth = logicalWidth;
+    logicalWidth = Math.round(rect.width);
+    logicalHeight = Math.round(rect.height);
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = logicalWidth * dpr;
+    canvas.height = logicalHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    player.y = logicalHeight - 38;
+    if (prevWidth > 0) {
+      player.x = Math.min(
+        Math.max(10, (player.x / prevWidth) * logicalWidth),
+        logicalWidth - player.width - 10
+      );
+    }
+    render();
+  };
 
   let animationId = null;
   let score = 0;
@@ -828,15 +850,6 @@ function initDevMinigame() {
   let particles = [];
 
   if (gameHighScoreEl) gameHighScoreEl.textContent = lastGameHighScore;
-
-  const player = {
-    x: LOGICAL_WIDTH / 2 - 28,
-    y: LOGICAL_HEIGHT - 42,
-    width: 56,
-    height: 24,
-    speed: 6.5,
-    dx: 0
-  };
 
   const itemCatalog = [
     { kind: "code", label: "</>", color: "#10b981", points: 10 },
@@ -874,7 +887,8 @@ function initDevMinigame() {
     frameCount = 0;
     items = [];
     particles = [];
-    player.x = LOGICAL_WIDTH / 2 - player.width / 2;
+    player.x = logicalWidth / 2 - player.width / 2;
+    player.y = logicalHeight - 38;
     player.dx = 0;
     updateHUD();
   };
@@ -900,20 +914,22 @@ function initDevMinigame() {
 
     player.x += player.dx;
     if (player.x < 10) player.x = 10;
-    if (player.x + player.width > LOGICAL_WIDTH - 10) {
-      player.x = LOGICAL_WIDTH - 10 - player.width;
+    if (player.x + player.width > logicalWidth - 10) {
+      player.x = logicalWidth - 10 - player.width;
     }
 
     const spawnRate = Math.max(24, 44 - Math.floor(score / 80));
     if (frameCount % spawnRate === 0) {
       const template =
         itemCatalog[Math.floor(Math.random() * itemCatalog.length)];
+      const itemWidth = 44;
+      const spawnRange = Math.max(20, logicalWidth - itemWidth - 28);
       items.push({
-        x: 24 + Math.random() * (LOGICAL_WIDTH - 76),
+        x: 14 + Math.random() * spawnRange,
         y: -26,
-        width: 44,
+        width: itemWidth,
         height: 24,
-        speed: 2.6 + Math.random() * 1.8 + Math.min(2.2, score / 250),
+        speed: 2.5 + Math.random() * 1.7 + Math.min(2.2, score / 250),
         ...template
       });
     }
@@ -950,7 +966,7 @@ function initDevMinigame() {
         continue;
       }
 
-      if (item.y > LOGICAL_HEIGHT + 30) {
+      if (item.y > logicalHeight + 30) {
         items.splice(i, 1);
       }
     }
@@ -971,17 +987,17 @@ function initDevMinigame() {
     const isLight =
       document.documentElement.getAttribute("data-theme") === "light";
 
-    ctx.clearRect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT);
+    ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
     // Theme-aware grid lines
     ctx.strokeStyle = isLight
       ? "rgba(15, 23, 42, 0.06)"
       : "rgba(255, 255, 255, 0.03)";
     ctx.lineWidth = 1;
-    for (let x = 0; x < LOGICAL_WIDTH; x += 40) {
+    for (let x = 0; x < logicalWidth; x += 40) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, LOGICAL_HEIGHT);
+      ctx.lineTo(x, logicalHeight);
       ctx.stroke();
     }
 
@@ -1032,6 +1048,7 @@ function initDevMinigame() {
   };
 
   const startGame = () => {
+    syncCanvasDimensions();
     resetState();
     gameStateMode = "playing";
     if (gameOverlay) gameOverlay.style.display = "none";
@@ -1039,6 +1056,36 @@ function initDevMinigame() {
     animationId = requestAnimationFrame(loop);
   };
 
+  // Direct Touch / Pointer Drag on Canvas for Natural Mobile Play
+  const movePaddleToClientX = (clientX) => {
+    if (gameStateMode !== "playing") return;
+    const rect = canvas.getBoundingClientRect();
+    const relX = clientX - rect.left;
+    player.x = Math.min(
+      Math.max(10, relX - player.width / 2),
+      logicalWidth - player.width - 10
+    );
+  };
+
+  canvas.addEventListener(
+    "touchmove",
+    (e) => {
+      if (gameStateMode !== "playing") return;
+      if (e.touches && e.touches[0]) {
+        e.preventDefault();
+        movePaddleToClientX(e.touches[0].clientX);
+      }
+    },
+    { passive: false }
+  );
+
+  canvas.addEventListener("touchstart", (e) => {
+    if (gameStateMode === "playing" && e.touches && e.touches[0]) {
+      movePaddleToClientX(e.touches[0].clientX);
+    }
+  });
+
+  // Keyboard Controls
   window.addEventListener("keydown", (e) => {
     if (gameStateMode !== "playing") return;
     if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
@@ -1061,6 +1108,7 @@ function initDevMinigame() {
     }
   });
 
+  // Touch & Mouse Button Controls
   const bindMoveBtn = (btn, dir) => {
     if (!btn) return;
     const startMove = (e) => {
@@ -1072,6 +1120,7 @@ function initDevMinigame() {
     };
     btn.addEventListener("touchstart", startMove, { passive: false });
     btn.addEventListener("touchend", stopMove);
+    btn.addEventListener("touchcancel", stopMove);
     btn.addEventListener("mousedown", startMove);
     btn.addEventListener("mouseup", stopMove);
     btn.addEventListener("mouseleave", stopMove);
@@ -1084,6 +1133,13 @@ function initDevMinigame() {
     startGameBtn.addEventListener("click", startGame);
   }
 
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver(() => syncCanvasDimensions());
+    ro.observe(viewport);
+  } else {
+    window.addEventListener("resize", syncCanvasDimensions);
+  }
+
   window.addEventListener("bb:themechange", render);
-  render();
+  syncCanvasDimensions();
 }

@@ -2,7 +2,9 @@
 <html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Bruno Borjes — Desenvolvedor Full Stack</title>
     <meta
       name="description"
@@ -69,20 +71,41 @@
           class="nav-menu"
           id="navMenu"
           aria-label="Navegação principal">
-          <a href="#sobre" class="nav-link" data-i18n="nav.about">Sobre</a>
-          <a href="#stack" class="nav-link" data-i18n="nav.stack">Stack</a>
-          <a href="#servicos" class="nav-link" data-i18n="nav.services"
-            >Serviços</a
-          >
-          <a href="#minigame" class="nav-link" data-i18n="nav.playground"
-            >Playground</a
-          >
-          <a
-            href="#contato"
-            class="nav-link nav-mobile-only"
-            data-i18n="nav.contact"
-            >Contato</a
-          >
+          <div class="nav-links-group">
+            <a href="#sobre" class="nav-link" data-i18n="nav.about">Sobre</a>
+            <a href="#stack" class="nav-link" data-i18n="nav.stack">Stack</a>
+            <a href="#servicos" class="nav-link" data-i18n="nav.services"
+              >Serviços</a
+            >
+            <a href="#minigame" class="nav-link" data-i18n="nav.playground"
+              >Playground</a
+            >
+            <a
+              href="#contato"
+              class="nav-link nav-mobile-only"
+              data-i18n="nav.contact"
+              >Contato</a
+            >
+          </div>
+
+          <div class="nav-drawer-footer">
+            <a
+              href="https://github.com/brunoborjes"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-pill">
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-pill">
+              <i class="fa-brands fa-linkedin-in"></i>
+              <span>LinkedIn</span>
+            </a>
+          </div>
         </nav>
 
         <div class="header-actions">
@@ -335,7 +358,7 @@
                 aplicações web estruturadas, rápidas e intuitivas.
               </p>
               <p data-i18n="about.p2">
-                Transitanto com naturalidade entre o design de interface e a
+                Transitando com naturalidade entre o design de interface e a
                 lógica de servidor, acompanho todo o ciclo de desenvolvimento: da
                 arquitetura semântica e responsiva no Front-end até a
                 construção de APIs, regras de negócio e automações no Back-end.
@@ -598,14 +621,15 @@
               </div>
             </div>
 
-            <div class="game-viewport">
-              <canvas id="gameCanvas" width="760" height="360"></canvas>
+            <div class="game-viewport" id="gameViewport">
+              <canvas id="gameCanvas"></canvas>
               <div class="game-overlay" id="gameOverlay">
                 <span class="overlay-badge">HTML5 CANVAS ENGINE</span>
                 <h3 id="overlayTitle">Pronto para compilar?</h3>
                 <p id="overlayText">
                   Mova com as setas <strong>&larr; &rarr;</strong>, teclas
-                  <strong>A / D</strong> ou toque nos controles abaixo.
+                  <strong>A / D</strong>, deslize na tela ou use os botões
+                  abaixo.
                 </p>
                 <button type="button" class="btn btn-primary" id="startGameBtn">
                   <i class="fa-solid fa-play"></i>
